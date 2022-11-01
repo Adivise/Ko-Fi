@@ -13,7 +13,6 @@ const MONGO_URI = Deno.env.get("MONGO_URI");
 if (MONGO_URI === undefined) {
   throw new Error("You need to set the MONGO_URI environment variable!");
 }
-const DEBUG = Deno.env.get("DEBUG") === "1";
 
 const client = new MongoClient();
 
@@ -23,13 +22,6 @@ try {
   console.error("Error connecting to MongoDB", err);
   throw err;
 }
-
-interface Post {
-  _id: Bson.ObjectId;
-  history: [];
-}
-
-const collection = client.database().collection<Post>("posts");
 
 async function callWebhook(data: Record<string, any>) {
   await fetch(DISCORD_WEBHOOK!, {
@@ -69,6 +61,23 @@ interface KofiEvent {
   tier_name: string | null;
 }
 
+interface Donate {
+  _id: Bson.ObjectId;
+  time: string;
+  name: string;
+  message: string;
+  amount: string;
+  url: string;
+  email: string;
+  currency: string;
+  transaction: string;
+  items: KofiShopItem[] | null;
+  tier: string | null;
+  useable: boolean;
+}
+
+const collection = client.database().collection<Donate>("donate");
+
 console.log("Listening on http://localhost:8000");
 
 serve(async (req) => {
@@ -82,10 +91,12 @@ serve(async (req) => {
       try {
         const form = await req.formData();
         const data: KofiEvent = JSON.parse(form.get("data")!.toString());
-        if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "74b9321d-875a-4bc4-b480-4acfbcdd7772")) {
+        
+        if (data.verification_token !== KOFI_TOKEN) {
           console.log(`[INFO] Someone made unauthorized request! Verification Token: ${data}`);
           return new Response("Unauthorized");
         }
+
         await callWebhook({ embeds: [{
               color: 0xF7EEE0,
               author: { name: `${data.is_public ? "" : "(Private) "}${data.from_name}` },
@@ -132,7 +143,17 @@ serve(async (req) => {
 
         await collection.insertOne({
           _id: new Bson.ObjectId(),
-          history: [data],
+          time: data.timestamp,
+          name: data.from_name,
+          message: data.message,
+          amount: data.amount,
+          url: data.url,
+          email: data.email,
+          currency: data.currency,
+          transaction: data.kofi_transaction_id,
+          items: data.shop_items,
+          tier: data.tier_name,
+          useable: false
         });
 
         return new Response("Delivered!");
