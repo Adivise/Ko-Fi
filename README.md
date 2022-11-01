@@ -19,3 +19,8 @@
 - `DISCORD_WEBHOOK`: Your Discord Webhook URL.
 - `KOFI_TOKEN`: Ko-fi Verification Token. Used to verify event is sent by Ko-fi.
 - `MONGO_URI`: MongoDB URL. (NEED SAME URL OF BOT.)
+
+## 🤖 Credits
+
+- [x] [kofi-discord](https://github.com/DjDeveloperr/kofi_discord/blob/main/mod.ts)
+- Note: Edit By: [Adivise](https://github.com/Adivise)
