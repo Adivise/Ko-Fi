@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import { dango } from "https://deno.land/x/dangodb@v1.0.3/mod.ts";
+import { Bson, MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
 const DISCORD_WEBHOOK = Deno.env.get("DISCORD_WEBHOOK");
 if (DISCORD_WEBHOOK === undefined) {
@@ -11,9 +11,28 @@ if (KOFI_TOKEN === undefined) {
   throw new Error("You need to set the KOFI_TOKEN environment variable to your Ko-fi webhook verification token.");
 }
 
+const MONGO_URI = Deno.env.get("MONGO_URI");
+if (MONGO_URI === undefined) {
+  throw new Error("You need to set the MONGO_URI environment variable!");
+}
+
 const DEBUG = Deno.env.get("DEBUG") === "1";
 
-await dango.connect("mongodb+srv://adivise:qw123456@cluster0.4mywz.mongodb.net/nanospaceplus?retryWrites=true&w=majority");
+const client = new MongoClient();
+
+try {
+  await client.connect(MONGO_URI);
+} catch (err) {
+  console.error("Error connecting to MongoDB", err);
+  throw err;
+}
+
+interface Post {
+  _id: Bson.ObjectId;
+  history: [];
+}
+
+const collection = client.database().collection<Post>("posts");
 
 async function callWebhook(data: Record<string, any>) {
   await fetch(DISCORD_WEBHOOK!, {
@@ -34,12 +53,6 @@ type KofiEventType = "Donation" | "Subscription" | "Commission" | "Shop Order";
 interface KofiShopItem {
   direct_link_code: string;
 }
-
-const donate = dango.schema({
-    history: Array,
-});
-
-const database = dango.model('donate', donate);
 
 interface KofiEvent {
   timestamp: string;
@@ -76,10 +89,11 @@ serve(async (req) => {
         if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "5e7284b8-d0c1-4a47-a342-37dc7e9344d6")) {
           console.log(`[INFO] Someone made unauthorized request! Verification Token: ${data}`);
           // mongoose db
-          database.create({
-            history: data,
+          await collection.insertOne({
+            _id: new Bson.ObjectId(),
+            history: [data],
           });
-
+          
           return new Response("Unauthorized");
         }
 
