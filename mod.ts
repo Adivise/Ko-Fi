@@ -77,7 +77,7 @@ interface Donate {
   useable: boolean;
 }
 
-const collection = client.database().collection<Donate>("Donate");
+const collection = client.database().collection<Donate>("donates");
 
 console.log("Listening on http://localhost:8000");
 
