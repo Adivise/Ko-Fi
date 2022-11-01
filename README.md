@@ -6,14 +6,14 @@
   <a href="https://ko-fi.com/nanotect" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
 </p>
 
-## Warning
+## Warning ⚠
 - Addon for **[NanoSpacePlus](https://github.com/Adivise/NanoSpacePlus)**
 
-## Deploy
+## Deploy 🐱‍🐉
 
-[Deploy to Deno Deploy!](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/mod.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
+[Deploy!](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/mod.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
 
-## Environment Variables
+## Environment Variables 📄
 
 - `DISCORD_WEBHOOK`: Your Discord Webhook URL.
 - `KOFI_TOKEN`: Ko-fi Verification Token. Used to verify event is sent by Ko-fi.
