@@ -8,7 +8,6 @@
 
 ## Warning
 - Addon for **[NanoSpacePlus](https://github.com/Adivise/NanoSpacePlus)**
-- Remember `You need to **HIDE** in **Private Channel** (Reason: Transaction Need to Unlock Premium Feature!)` If your really need!! here remove **[Click Here](https://github.com/Adivise/Ko-Fi/blob/main/mod.ts#L137)** `Line 137-139 for show on **Public Channel**!`
 
 ## Deploy
 
@@ -18,4 +17,4 @@
 
 - `DISCORD_WEBHOOK`: Your Discord Webhook URL.
 - `KOFI_TOKEN`: Ko-fi Verification Token. Used to verify event is sent by Ko-fi.
-- `MONGO_URI`: MongoDB URL.
+- `MONGO_URI`: MongoDB URL. (NEED SAME URL OF BOT.)
