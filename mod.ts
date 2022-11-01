@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import { connect, Query } from 'https://deno.land/x/yongo@1.4.3/mod.ts';
+import { connect, Query } from 'https://deno.land/x/yongo@v1.4.3/mod.ts';
 
 const DISCORD_WEBHOOK = Deno.env.get("DISCORD_WEBHOOK");
 if (DISCORD_WEBHOOK === undefined) {
