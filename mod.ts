@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import { connect, Query } from 'https://deno.land/x/yongo@v1.4.3/mod.ts';
+import { dango } from "https://deno.land/x/dangodb@v1.0.3/mod.ts";
 
 const DISCORD_WEBHOOK = Deno.env.get("DISCORD_WEBHOOK");
 if (DISCORD_WEBHOOK === undefined) {
@@ -18,7 +18,7 @@ if (MONGO_URI === undefined) {
 
 const DEBUG = Deno.env.get("DEBUG") === "1";
 
-await connect(MONGO_URI);
+await dango.connect(MONGO_URI);
 
 async function callWebhook(data: Record<string, any>) {
   await fetch(DISCORD_WEBHOOK!, {
@@ -39,6 +39,12 @@ type KofiEventType = "Donation" | "Subscription" | "Commission" | "Shop Order";
 interface KofiShopItem {
   direct_link_code: string;
 }
+
+const donate = dango.schema({
+    history: Array,
+});
+
+const database = dango.model('donate', donate);
 
 interface KofiEvent {
   timestamp: string;
@@ -75,10 +81,10 @@ serve(async (req) => {
         if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "5e7284b8-d0c1-4a47-a342-37dc7e9344d6")) {
           console.log(`[INFO] Someone made unauthorized request! Verification Token: ${data}`);
           // mongoose db
-          const insertQuery = new Query<any>('donate');
-          insertQuery.put('name', [data]);
-          await insertQuery.insert();
-
+          database.create({
+            history: data,
+          });
+          
           return new Response("Unauthorized");
         }
 
