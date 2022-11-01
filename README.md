@@ -8,10 +8,10 @@
 
 ## 🐱‍🐉 Deploy
 
-- [Deploy for NanoSpace+](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/nanospace.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
+- [x] [Deploy for NanoSpace+](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/nanospace.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
 - Note: Unlock Premium Feature!
 
-- [Deploy for Normal](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/index.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN)
+- [x] [Deploy for Normal](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/index.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN)
 - Note: Normal (Not Unlock or Save to Database!)
 
 ## 📄 Environment Variables
