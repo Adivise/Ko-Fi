@@ -12,8 +12,6 @@ if (KOFI_TOKEN === undefined) {
 
 const DEBUG = Deno.env.get("DEBUG") === "1";
 
-const collection = client.database().collection<Post>("posts");
-
 async function callWebhook(data: Record<string, any>) {
   await fetch(DISCORD_WEBHOOK!, {
     method: "POST",
