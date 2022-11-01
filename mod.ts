@@ -71,12 +71,13 @@ interface Donate {
   email: string;
   currency: string;
   transaction: string;
+  type: KofiEventType;
   items: KofiShopItem[] | null;
   tier: string | null;
   useable: boolean;
 }
 
-const collection = client.database().collection<Donate>("donate");
+const collection = client.database().collection<Donate>("Donate");
 
 console.log("Listening on http://localhost:8000");
 
@@ -150,6 +151,7 @@ serve(async (req) => {
           url: data.url,
           email: data.email,
           currency: data.currency,
+          type: data.type,
           transaction: data.kofi_transaction_id,
           items: data.shop_items,
           tier: data.tier_name,
