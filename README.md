@@ -8,7 +8,7 @@
 
 ## Warning
 - Addon for **[NanoSpacePlus](https://github.com/Adivise/NanoSpacePlus)**
-- Remember `You need to **HIDE** in **Private Channel** (Reason: Transaction ID)` If your really need!! here remove **[Click Here](https://github.com/Adivise/Ko-Fi/blob/main/mod.ts#L137)** `Line 137-139 for show on **Public Channel**!`
+- Remember `You need to **HIDE** in **Private Channel** (Reason: Transaction Need to Unlock Premium Feature!)` If your really need!! here remove **[Click Here](https://github.com/Adivise/Ko-Fi/blob/main/mod.ts#L137)** `Line 137-139 for show on **Public Channel**!`
 
 ## Deploy
 
