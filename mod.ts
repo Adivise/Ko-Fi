@@ -81,7 +81,7 @@ serve(async (req) => {
       return new Response("https://github.com/Adivise");
     }
 
-    case "/post": {
+    case "/webhook": {
       try {
         const form = await req.formData();
         const data: KofiEvent = JSON.parse(form.get("data")!.toString());
