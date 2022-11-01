@@ -85,7 +85,7 @@ serve(async (req) => {
   const { pathname: path } = new URL(req.url);
   switch (path) {
     case "/": {
-      return new Response("https://github.com/Adivise");
+      return new Response("https://github.com/Adivise/Ko-Fi");
     }
 
     case "/webhook": {
@@ -135,7 +135,7 @@ serve(async (req) => {
               ],
               timestamp: data.timestamp,
               footer: {
-                text: data.kofi_transaction_id,
+                text: "Thank for the donate.",
               },
             },
           ],
