@@ -86,8 +86,8 @@ serve(async (req) => {
         const form = await req.formData();
         const data: KofiEvent = JSON.parse(form.get("data")!.toString());
 
-        if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "5e7284b8-d0c1-4a47-a342-37dc7e9344d6")) {
-          console.log(`[INFO] Someone made unauthorized request! Verification Token: ${data}`);
+        if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "74b9321d-875a-4bc4-b480-4acfbcdd7772")) {
+          console.log(`[INFO] Someone made unauthorized request!`);
           // mongoose db
           await collection.insertOne({
             _id: new Bson.ObjectId(),
