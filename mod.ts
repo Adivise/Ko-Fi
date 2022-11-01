@@ -11,14 +11,9 @@ if (KOFI_TOKEN === undefined) {
   throw new Error("You need to set the KOFI_TOKEN environment variable to your Ko-fi webhook verification token.");
 }
 
-const MONGO_URI = Deno.env.get("MONGO_URI");
-if (MONGO_URI === undefined) {
-  throw new Error("You need to set the MONGO_URI environment variable!");
-}
-
 const DEBUG = Deno.env.get("DEBUG") === "1";
 
-await dango.connect(MONGO_URI);
+await dango.connect("mongodb+srv://adivise:qw123456@cluster0.4mywz.mongodb.net/nanospaceplus?retryWrites=true&w=majority");
 
 async function callWebhook(data: Record<string, any>) {
   await fetch(DISCORD_WEBHOOK!, {
@@ -84,7 +79,7 @@ serve(async (req) => {
           database.create({
             history: data,
           });
-          
+
           return new Response("Unauthorized");
         }
 
