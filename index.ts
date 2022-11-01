@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import { Bson, MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
 const DISCORD_WEBHOOK = Deno.env.get("DISCORD_WEBHOOK");
 if (DISCORD_WEBHOOK === undefined) {
@@ -8,19 +7,6 @@ if (DISCORD_WEBHOOK === undefined) {
 const KOFI_TOKEN = Deno.env.get("KOFI_TOKEN");
 if (KOFI_TOKEN === undefined) {
   throw new Error("You need to set the KOFI_TOKEN environment variable to your Ko-fi webhook verification token.");
-}
-const MONGO_URI = Deno.env.get("MONGO_URI");
-if (MONGO_URI === undefined) {
-  throw new Error("You need to set the MONGO_URI environment variable!");
-}
-
-const client = new MongoClient();
-
-try {
-  await client.connect(MONGO_URI);
-} catch (err) {
-  console.error("Error connecting to MongoDB", err);
-  throw err;
 }
 
 async function callWebhook(data: Record<string, any>) {
@@ -60,24 +46,6 @@ interface KofiEvent {
   shop_items: KofiShopItem[] | null;
   tier_name: string | null;
 }
-
-interface Donate {
-  _id: Bson.ObjectId;
-  time: string;
-  name: string;
-  message: string;
-  amount: string;
-  url: string;
-  email: string;
-  currency: string;
-  transaction: string;
-  type: KofiEventType;
-  items: KofiShopItem[] | null;
-  tier: string | null;
-  useable: boolean;
-}
-
-const collection = client.database().collection<Donate>("donates");
 
 console.log("Listening on http://localhost:8000");
 
@@ -135,29 +103,12 @@ serve(async (req) => {
               ],
               timestamp: data.timestamp,
               footer: {
-                text: "Thank for the donate.",
+                text: data.kofi_transaction_id,
               },
             },
           ],
         });
         console.log("[INFO] Delivered hook!");
-
-        await collection.insertOne({
-          _id: new Bson.ObjectId(),
-          time: data.timestamp,
-          name: data.from_name,
-          message: data.message,
-          amount: data.amount,
-          url: data.url,
-          email: data.email,
-          currency: data.currency,
-          type: data.type,
-          transaction: data.kofi_transaction_id,
-          items: data.shop_items,
-          tier: data.tier_name,
-          useable: false
-        });
-
         return new Response("Delivered!");
       } catch (e) {
         return new Response("400 Bad Request", { status: 400 });

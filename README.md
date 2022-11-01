@@ -11,7 +11,8 @@
 
 ## Deploy 🐱‍🐉
 
-[Deploy!](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/mod.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
+[Deploy for NanoSpace+](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/nanospace.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN,MONGO_URI)
+[Deploy for Aleart Only](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/index.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN)
 
 ## Environment Variables 📄
 
