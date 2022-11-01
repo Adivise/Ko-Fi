@@ -84,12 +84,6 @@ serve(async (req) => {
         const data: KofiEvent = JSON.parse(form.get("data")!.toString());
         if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "74b9321d-875a-4bc4-b480-4acfbcdd7772")) {
           console.log(`[INFO] Someone made unauthorized request! Verification Token: ${data}`);
-          // mongoose db
-          await collection.insertOne({
-            _id: new Bson.ObjectId(),
-            history: [data],
-          });
-          
           return new Response("Unauthorized");
         }
         await callWebhook({ embeds: [{
@@ -135,6 +129,12 @@ serve(async (req) => {
           ],
         });
         console.log("[INFO] Delivered hook!");
+
+        await collection.insertOne({
+          _id: new Bson.ObjectId(),
+          history: [data],
+        });
+
         return new Response("Delivered!");
       } catch (e) {
         return new Response("400 Bad Request", { status: 400 });
