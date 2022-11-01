@@ -12,7 +12,7 @@
 - Note: Unlock Premium Feature!
 
 - [x] [Deploy for Normal](https://dash.deno.com/new?url=https://raw.githubusercontent.com/Adivise/Ko-Fi/main/index.ts&env=DISCORD_WEBHOOK,KOFI_TOKEN)
-- Note: Normal (Not Unlock or Save to Database!)
+- Note: Normal (Not Unlock or Use Database! Only Send Webhook)
 
 ## 📄 Environment Variables
 
