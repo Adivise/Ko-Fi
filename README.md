@@ -1,4 +1,10 @@
-# Ko-Fi MONGO-DB
+<p align="center">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=NanoSpacePlus&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
+</p>
+
+<p align="center"> 
+  <a href="https://ko-fi.com/nanotect" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
+</p>
 
 ## Deploy
 
@@ -9,5 +15,3 @@
 - `DISCORD_WEBHOOK`: Your Discord Webhook URL.
 - `KOFI_TOKEN`: Ko-fi Verification Token. Used to verify event is sent by Ko-fi.
 - `MONGO_URI`: MongoDB URL.
- 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nanotect)
