@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import { Bson, MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
 const DISCORD_WEBHOOK = Deno.env.get("DISCORD_WEBHOOK");
 if (DISCORD_WEBHOOK === undefined) {
@@ -11,26 +10,7 @@ if (KOFI_TOKEN === undefined) {
   throw new Error("You need to set the KOFI_TOKEN environment variable to your Ko-fi webhook verification token.");
 }
 
-const MONGO_URI = Deno.env.get("MONGO_URI");
-if (MONGO_URI === undefined) {
-  throw new Error("You need to set the MONGO_URI environment variable!");
-}
-
 const DEBUG = Deno.env.get("DEBUG") === "1";
-
-const client = new MongoClient();
-
-try {
-  await client.connect(MONGO_URI);
-} catch (err) {
-  console.error("Error connecting to MongoDB", err);
-  throw err;
-}
-
-interface Post {
-  _id: Bson.ObjectId;
-  history: [];
-}
 
 const collection = client.database().collection<Post>("posts");
 
@@ -88,12 +68,6 @@ serve(async (req) => {
 
         if (data.verification_token !== KOFI_TOKEN && !(DEBUG && data.verification_token === "74b9321d-875a-4bc4-b480-4acfbcdd7772")) {
           console.log(`[INFO] Someone made unauthorized request!`);
-          // mongoose db
-          await collection.insertOne({
-            _id: new Bson.ObjectId(),
-            history: [data],
-          });
-          
           return new Response("Unauthorized");
         }
 
